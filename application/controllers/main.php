@@ -112,7 +112,8 @@ public function viewEvent(){
 							//Add events
 //*************************************************************************************************//
  public function addEvent(){
- 	
+ 		
+
  	$title =  $this->input->post('event-title');
  	$start =  $this->input->post('event-start');
  	$starttime =  $this->input->post('event-start-time');
@@ -123,12 +124,11 @@ public function viewEvent(){
 
  	$sess = $this->session->userdata('logged_in');
  	$username = $sess['email'];
- 	//$data['user_info'] = $this->events_model->getuser1($sess);
- 	//$pic = $sess['image'];
- 	//var_dump($data);
+ 
 
  	$datestart = date('Y-m-d', strtotime($start)) . ' ' .date('H:i:s', strtotime($starttime));
  	$dateend = date('Y-m-d', strtotime($end)) . ' ' .date('H:i:s', strtotime($endtime)); 
+
 
 
  	$formdata = array('email' => $username,
@@ -140,12 +140,49 @@ public function viewEvent(){
 
 
 
- 	$this->load->model('events_model');
-    $eventdata = $this->events_model->insertEvent($formdata);
+	$this->load->library('form_validation');
+ 	$this->form_validation->set_rules('event-start-time', 'Start Time', 'trim|required|xss_clean|callback_check_time['.$endtime.']');
+ 	$this->form_validation->set_rules('event-start', 'Start Date', 'trim|required|xss_clean|callback_check_date['.$datestart.', '.$dateend.']');
+
+ 	if ($this->form_validation->run() == FALSE) {
+
+ 		$this->load->view('error/addError');
+
+ 	}else{
+
+	 	// $this->load->model('events_model');
+	  //   $eventdata = $this->events_model->insertEvent($formdata);
+	  // 	redirect('main/index');	
+ 	}
 
 
+}
 
-  redirect('main/index');
+ function check_time($starttime, $endtime){
+
+	$start = date('H:i:s', strtotime($starttime));
+	$end = date('H:i:s', strtotime($endtime));
+
+	if ($start > $end) {
+		return True;
+	}else{
+		$this->form_validation->set_message('check_time', 'Please correct your time input.');
+		return False;
+	}
+
+}
+
+function check_date($default, $starttime, $endtime){
+
+	$this->load->model('admin_model');
+	
+	if ($this->admin_model->get_date_range($starttime, $endtime) == True) {
+		return True;
+	}else{
+		$this->form_validation->set_message('check_date', 'Date and time already reserved.');
+		return False;
+	}
+
 }
 //*************************************************************************************************//
 							//View the post events by the users
