@@ -1,0 +1,111 @@
+  .form-signin {
+  	max-width: 300px;
+  	padding: 19px 29px 29px;
+  	margin: 0 auto 20px;
+  	background-color: #fff;
+  	/* border: 1px solid #e5e5e5; */
+  	-webkit-border-radius: 5px;
+  	-moz-border-radius: 5px;
+  	border-radius: 5px;
+  	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  	box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  }
+
+
+/* Body and structure
+-------------------------------------------------- */
+html{
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background-color: #fff;
+	position: relative;
+
+	width: 100%;
+	height: 100%;
+
+	background-image: url('../img/10.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+
+}
+
+.year{
+	font-size:108px;
+	margin-top:30px;
+}
+
+.month{
+	font-size:42px;
+	color:red;
+}
+
+.time{
+	float:right;
+	font-size:36px;
+	text-align:right;
+}
+
+.calendar{
+}
+
+.calendar TH{
+	font-size:14px;
+	font-weight:bold;
+	border-top:1px solid #ccc;
+}
+
+.calendar TD{
+	opacity: 0.9;
+	height:50px;
+	font-size:24px;
+	color:#999;
+}
+
+.num{
+	opacity: 100;
+}
+
+.calendar TD.weekend{
+	color:#CDCDCD;
+}
+
+.calendar TD.today{
+	background-color: transparent;
+	color: red;
+}
+
+.calendar TD.holiday{
+	color:red;
+}
+
+.content{
+	color:black;
+	font-size:11px;
+	line-height:0px;
+}
+
+footer{
+	border: 0;
+	position: fixed;
+	bottom: 7px;
+	left: 0;
+	width: 99%;
+	text-align: right;
+	color: #eee;
+	font-size: .9em;
+}
+
+footer A{
+	color: #eee;
+}
+
+footer A:hover{
+	color: red;
+}
+
+
