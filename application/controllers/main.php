@@ -142,7 +142,7 @@ public function viewEvent(){
 
 	$this->load->library('form_validation');
  	$this->form_validation->set_rules('event-start-time', 'Start Time', 'trim|required|xss_clean|callback_check_time['.$endtime.']');
- 	$this->form_validation->set_rules('event-start', 'Start Date', 'trim|required|xss_clean|callback_check_date['.$datestart.', '.$dateend.']');
+ 	$this->form_validation->set_rules('event-start', 'Start Date', 'trim|required|xss_clean|callback_check_date['.$datestart.'++'.$dateend.']');
 
  	if ($this->form_validation->run() == FALSE) {
 
@@ -150,9 +150,9 @@ public function viewEvent(){
 
  	}else{
 
-	 	// $this->load->model('events_model');
-	  //   $eventdata = $this->events_model->insertEvent($formdata);
-	  // 	redirect('main/index');	
+	 	$this->load->model('events_model');
+	    $eventdata = $this->events_model->insertEvent($formdata);
+	  	redirect('main/index');	
  	}
 
 
@@ -163,7 +163,9 @@ public function viewEvent(){
 	$start = date('H:i:s', strtotime($starttime));
 	$end = date('H:i:s', strtotime($endtime));
 
-	if ($start > $end) {
+	var_dump($start . $end);
+
+	if (strtotime($start) < strtotime($end)) {
 		return True;
 	}else{
 		$this->form_validation->set_message('check_time', 'Please correct your time input.');
@@ -172,11 +174,17 @@ public function viewEvent(){
 
 }
 
-function check_date($default, $starttime, $endtime){
+function check_date($default, $dates){
+
+	//var_dump($starttime);
 
 	$this->load->model('admin_model');
+	$date = explode('++', $dates);
+
+	//var_dump($date);	
+
 	
-	if ($this->admin_model->get_date_range($starttime, $endtime) == True) {
+	if ($this->admin_model->get_date_range(strtotime($date[0]), strtotime($date[1])) == True) {
 		return True;
 	}else{
 		$this->form_validation->set_message('check_date', 'Date and time already reserved.');

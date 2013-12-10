@@ -149,12 +149,14 @@ public function ajax_edit_user($id){
 
 public function get_date_range($datestart, $dateend){
 
+	var_dump($datestart . $dateend);
+
 	$query = $this->db->query("SELECT *
 FROM mycal
 WHERE NOT (date_start > '$dateend'
            OR date_end < '$datestart')");
 
-	if ($this->db->num_rows($query) == 0) {
+	if ($query->num_rows() == 0) {
 		return TRUE;
 	}else{
 		return FALSE;
