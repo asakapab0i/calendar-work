@@ -154,10 +154,12 @@ public function get_date_range($datestart, $dateend){
 	$end = date('Y-m-d H:i:s', strtotime($dateend));
 
 
+
+
 	$query = $this->db->query("SELECT *
 FROM mycal
-WHERE NOT (date_start > '$start'
-           OR date_end < '$end')");
+WHERE NOT (date_start >= '$end'
+           OR date_end <= '$start')");
 
 	if ($query->num_rows() == 0) {
 		return TRUE;
