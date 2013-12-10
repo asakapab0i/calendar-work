@@ -163,7 +163,7 @@ public function viewEvent(){
 	$start = date('H:i:s', strtotime($starttime));
 	$end = date('H:i:s', strtotime($endtime));
 
-	var_dump($start . $end);
+	//var_dump($start . $end);
 
 	if (strtotime($start) < strtotime($end)) {
 		return True;
@@ -180,11 +180,10 @@ function check_date($default, $dates){
 
 	$this->load->model('admin_model');
 	$date = explode('++', $dates);
-
-	//var_dump($date);	
+	
 
 	
-	if ($this->admin_model->get_date_range(strtotime($date[0]), strtotime($date[1])) == True) {
+	if ($this->admin_model->get_date_range($date[0], $date[1]) == True) {
 		return True;
 	}else{
 		$this->form_validation->set_message('check_date', 'Date and time already reserved.');
